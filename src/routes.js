@@ -14,6 +14,7 @@ import NotFound from './pages/Page404';
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const user = JSON.parse(localStorage.getItem('profile'));
   return useRoutes([
     {
       path: '/dashboard',
