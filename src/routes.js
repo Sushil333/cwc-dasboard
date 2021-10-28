@@ -14,6 +14,7 @@ import NotFound from './pages/Page404';
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const user = JSON.parse(localStorage.getItem('profile'));
   return useRoutes([
     {
       path: '/dashboard',
@@ -33,7 +34,7 @@ export default function Router() {
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
-        { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '/', element: !user ? <Navigate to="login" /> : <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
