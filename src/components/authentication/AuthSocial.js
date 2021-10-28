@@ -1,41 +1,57 @@
-import { Icon } from '@iconify/react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { Stack, Button, Divider, Typography } from '@mui/material';
 import googleFill from '@iconify/icons-eva/google-fill';
+import { Icon } from '@iconify/react';
 
 import { GoogleLogin } from 'react-google-login';
 
-import { AUTH } from '../../constants/actionTypes';
+// import twitterFill from '@iconify/icons-eva/twitter-fill';
+// import facebookFill from '@iconify/icons-eva/facebook-fill';
+// material
 
-import { Stack, Button, Divider, Typography } from '@mui/material';
+import { AUTH } from '../../constants/actionTypes';
 
 // ----------------------------------------------------------------------
 
 export default function AuthSocial() {
-  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
     try {
-      console.log(res);
-      // dispatch({ type: AUTH, data: { result, token } });
+      dispatch({ type: AUTH, data: { result, token } });
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
 
-  const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+  const googleError = (e) => console.log(e);
   return (
     <>
       <Stack direction="row" spacing={2}>
-      <GoogleLogin
-        clientId="1037570333853-37cksdceoqhnfv03ml80eam2qcvhqi9l.apps.googleusercontent.com"
-        render={(renderProps) => (
-          <Button fullWidth size="large" color="inherit" variant="outlined">
-            Continue with Google &nbsp;&nbsp; <Icon icon={googleFill} color="#DF3E30" height={24} />
-          </Button>
-        )}
-        onSuccess={googleSuccess}
-        onFailure={googleError}
-        cookiePolicy="single_host_origin"
+        <GoogleLogin
+          clientId="1037570333853-37cksdceoqhnfv03ml80eam2qcvhqi9l.apps.googleusercontent.com"
+          render={(renderProps) => (
+            <Button
+              fullWidth
+              size="large"
+              color="inherit"
+              variant="outlined"
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+            >
+              Continue with Google &nbsp;&nbsp;
+              <Icon icon={googleFill} color="#DF3E30" height={24} />
+            </Button>
+          )}
+          onSuccess={googleSuccess}
+          onFailure={googleError}
+          cookiePolicy="single_host_origin"
         />
 
         {/* <Button fullWidth size="large" color="inherit" variant="outlined">

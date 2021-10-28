@@ -1,17 +1,22 @@
-import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+
+import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Link as RouterLink } from 'react-router-dom';
+
 // material
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 // components
 import MenuPopover from '../../components/MenuPopover';
-//
+
 import account from '../../_mocks_/account';
 
+import * as actionType from '../../constants/actionTypes';
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -35,6 +40,9 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -43,6 +51,12 @@ export default function AccountPopover() {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const logout = () => {
+    dispatch({ type: actionType.LOGOUT });
+    navigate('/login');
+    setUser(null);
   };
 
   return (
@@ -110,7 +124,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined" onClick={logout}>
             Logout
           </Button>
         </Box>
