@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://5000-chocolate-grouse-2gn0ezq3.ws-us18.gitpod.io' });
+const API = axios.create({ baseURL: 'https://7daf-35-197-33-51.ngrok.io' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
@@ -9,5 +9,5 @@ API.interceptors.request.use((req) => {
 
   return req;
 });
-export const signIn = (formData) => API.post('/user/signin', formData);
-export const signUp = (formData) => API.post('/user/signup', formData);
+export const signIn = (formData) => API.post('/api/auth/signin', formData);
+export const signUp = (formData) => API.post('/api/auth/signup', formData);
