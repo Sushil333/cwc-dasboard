@@ -1,10 +1,13 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { useDispatch, connect } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import PropTypes from 'prop-types';
+
 // material
 import {
   Link,
@@ -17,10 +20,12 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
+import { signin } from '../../../actions/auth';
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -35,8 +40,9 @@ export default function LoginForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      dispatch(signin(values, navigate));
+      // navigate('/dashboard', { replace: true });
     }
   });
 
@@ -103,4 +109,17 @@ export default function LoginForm() {
       </Form>
     </FormikProvider>
   );
-}
+};
+
+LoginForm.propTypes = {
+  signin: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { signin })(LoginForm);
