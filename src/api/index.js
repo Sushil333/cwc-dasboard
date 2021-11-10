@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://7daf-35-197-33-51.ngrok.io' });
+const API = axios.create({ baseURL: 'https://db7d-34-145-65-31.ngrok.io' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
