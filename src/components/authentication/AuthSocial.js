@@ -11,7 +11,7 @@ import { GoogleLogin } from 'react-google-login';
 // import facebookFill from '@iconify/icons-eva/facebook-fill';
 // material
 
-import { AUTH } from '../../constants/actionTypes';
+import * as actionType from '../../constants/userConstants';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export default function AuthSocial() {
     const result = res?.profileObj;
     const token = res?.tokenId;
     try {
-      dispatch({ type: AUTH, data: { result, token } });
+      dispatch({ type: actionType.USER_LOGIN_SUCCESS, data: { result, token } });
       navigate('/');
     } catch (error) {
       console.log(error);

@@ -40,7 +40,8 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userInfo')));
+  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const anchorRef = useRef(null);

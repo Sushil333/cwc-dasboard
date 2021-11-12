@@ -1,12 +1,15 @@
-import * as Yup from 'yup';
-import { useState } from 'react';
-import { useDispatch, connect } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useFormik, Form, FormikProvider } from 'formik';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
+import * as Yup from 'yup';
+
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import PropTypes from 'prop-types';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import infoFill from '@iconify/icons-eva/info-fill';
+import { Icon } from '@iconify/react';
 
 // material
 import {
@@ -16,17 +19,35 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  FormControlLabel
+  FormControlLabel,
+  Alert,
+  Collapse
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-import { signin } from '../../../actions/auth';
+import { login } from '../../../actions/userActions';
 // ----------------------------------------------------------------------
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('dashboard');
+    }
+    if (error) {
+      setAlertOpen(true);
+    } else {
+      setAlertOpen(false);
+    }
+  }, [userInfo, navigate, error]);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -41,8 +62,7 @@ const LoginForm = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      dispatch(signin(values, navigate));
-      // navigate('/dashboard', { replace: true });
+      dispatch(login(values));
     }
   });
 
@@ -55,6 +75,22 @@ const LoginForm = () => {
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Stack sx={{ mb: 3 }}>
+          {error && (
+            <Collapse in={alertOpen}>
+              <Alert
+                icon={<Icon icon={infoFill} color="#ff4842" />}
+                severity="error"
+                color="error"
+                onClose={() => {
+                  setAlertOpen(false);
+                }}
+              >
+                {error}
+              </Alert>
+            </Collapse>
+          )}
+        </Stack>
         <Stack spacing={3}>
           <TextField
             fullWidth
@@ -102,7 +138,7 @@ const LoginForm = () => {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          loading={isSubmitting && loading}
         >
           Login
         </LoadingButton>
@@ -111,15 +147,4 @@ const LoginForm = () => {
   );
 };
 
-LoginForm.propTypes = {
-  signin: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-export default connect(mapStateToProps, { signin })(LoginForm);
+export default LoginForm;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://db7d-34-145-65-31.ngrok.io' });
+const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
