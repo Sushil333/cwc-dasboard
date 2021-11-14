@@ -23,8 +23,9 @@ export default function AuthSocial() {
     const result = res?.profileObj;
     const token = res?.tokenId;
     try {
-      dispatch({ type: actionType.USER_LOGIN_SUCCESS, data: { result, token } });
-      navigate('/');
+      console.log(result);
+      dispatch({ type: actionType.USER_LOGIN_SUCCESS, payload: { ...result, token } });
+      navigate('/dashboard');
     } catch (error) {
       console.log(error);
     }

@@ -13,8 +13,6 @@ export const login = (formData) => async (dispatch) => {
       type: actionType.USER_LOGIN_SUCCESS,
       payload: data
     });
-
-    localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     console.log(error.response);
     dispatch({

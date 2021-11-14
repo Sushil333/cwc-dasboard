@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
@@ -16,7 +16,7 @@ import MenuPopover from '../../components/MenuPopover';
 
 import account from '../../_mocks_/account';
 
-import * as actionType from '../../constants/actionTypes';
+import { logout } from '../../actions/userActions';
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -40,10 +40,12 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userInfo')));
-  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -54,10 +56,14 @@ export default function AccountPopover() {
     setOpen(false);
   };
 
-  const logout = () => {
-    dispatch({ type: actionType.LOGOUT });
-    navigate('/login');
-    setUser(null);
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/login');
+    }
+  }, [userInfo, navigate]);
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -82,7 +88,7 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={userInfo.imageUrl ? userInfo.imageUrl : account.photoURL} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -93,10 +99,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {account.displayName}
+            {userInfo.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {userInfo.email}
           </Typography>
         </Box>
 
@@ -125,7 +131,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined" onClick={logout}>
+          <Button fullWidth color="inherit" variant="outlined" onClick={handleLogout}>
             Logout
           </Button>
         </Box>

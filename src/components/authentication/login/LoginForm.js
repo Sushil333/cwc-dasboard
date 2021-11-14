@@ -40,7 +40,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('dashboard');
+      navigate('/dashboard');
     }
     if (error) {
       setAlertOpen(true);
