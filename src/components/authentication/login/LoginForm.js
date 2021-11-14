@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-
+// redux
 import { useDispatch, useSelector } from 'react-redux';
-
+// formik and yep
 import { useFormik, Form, FormikProvider } from 'formik';
 import * as Yup from 'yup';
-
+// iconify
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import infoFill from '@iconify/icons-eva/info-fill';
@@ -36,18 +36,15 @@ const LoginForm = () => {
   const [alertOpen, setAlertOpen] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error } = userLogin;
 
   useEffect(() => {
-    if (userInfo) {
-      navigate('/dashboard');
-    }
     if (error) {
       setAlertOpen(true);
     } else {
       setAlertOpen(false);
     }
-  }, [userInfo, navigate, error]);
+  }, [navigate, error]);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -62,7 +59,7 @@ const LoginForm = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      dispatch(login(values));
+      dispatch(login(values, navigate));
     }
   });
 

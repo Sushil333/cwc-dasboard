@@ -1,19 +1,39 @@
-import * as Yup from 'yup';
-import { useState } from 'react';
-import { Icon } from '@iconify/react';
-import { useFormik, Form, FormikProvider } from 'formik';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+// formik and yep
+import * as Yup from 'yup';
+import { useFormik, Form, FormikProvider } from 'formik';
+// iconify
+import { Icon } from '@iconify/react';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import infoFill from '@iconify/icons-eva/info-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, Alert, Collapse } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
+//
+import { register } from '../../../actions/userActions';
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error } = userRegister;
+
+  useEffect(() => {
+    if (error) {
+      setAlertOpen(true);
+    } else {
+      setAlertOpen(false);
+    }
+  }, [navigate, error]);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -33,8 +53,8 @@ export default function RegisterForm() {
       password: ''
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      dispatch(register(values, navigate));
     }
   });
 
@@ -43,6 +63,22 @@ export default function RegisterForm() {
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Stack sx={{ mb: 3 }}>
+          {error && (
+            <Collapse in={alertOpen}>
+              <Alert
+                icon={<Icon icon={infoFill} color="#ff4842" />}
+                severity="error"
+                color="error"
+                onClose={() => {
+                  setAlertOpen(false);
+                }}
+              >
+                {error}
+              </Alert>
+            </Collapse>
+          )}
+        </Stack>
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
@@ -96,7 +132,7 @@ export default function RegisterForm() {
             size="large"
             type="submit"
             variant="contained"
-            loading={isSubmitting}
+            loading={isSubmitting && loading}
           >
             Register
           </LoadingButton>
