@@ -10,6 +10,15 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+/**
+ * Authentication Routes
+ */
 export const signIn = (formData) => API.post('/api/user/signin', formData);
 export const signUp = (formData) => API.post('/api/user/signup', formData);
 export const getUserProfile = () => API.get('/api/user/get-user-profile');
+
+/**
+ * Dish Routes
+ */
+export const createDish = (formData) => API.post('/api/dish/create', formData);
+export const getStoreDishes = () => API.post('/api/dish/get-store-dishes');

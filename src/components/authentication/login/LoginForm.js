@@ -44,7 +44,7 @@ const LoginForm = () => {
     } else {
       setAlertOpen(false);
     }
-  }, [navigate, error]);
+  }, [error]);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
