@@ -26,7 +26,7 @@ import Page from '../components/Page';
 import { ProductList } from '../components/_dashboard/products';
 //
 import PRODUCTS from '../_mocks_/products';
-import { createDish } from '../actions/storeActions';
+import { createDish, fetchStoreDishes } from '../actions/storeActions';
 
 // ----------------------------------------------------------------------
 
@@ -38,22 +38,26 @@ export default function EcommerceShop() {
   const navigate = useNavigate();
 
   const createDishStore = useSelector((state) => state.createDish);
-  const { loading, error } = createDishStore;
+  const { formLoading, error } = createDishStore;
+
+  const getStoreDishesStore = useSelector((state) => state.fetchStoreDishes);
+  const { allDishes } = getStoreDishesStore;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
+    dispatch(fetchStoreDishes());
     if (error) {
       setAlertOpen(true);
     } else {
       setAlertOpen(false);
     }
-    if (!loading) {
+    if (!formLoading) {
       setOpen(false);
     }
-  }, [error, loading]);
+  }, [error, formLoading, dispatch]);
 
   // const URL =
   //   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
@@ -105,6 +109,7 @@ export default function EcommerceShop() {
   //   resetForm();
   // };
 
+  console.log(allDishes);
   return (
     <Page title="Dashboard: Products | Minimal-UI">
       <Container>
@@ -191,7 +196,7 @@ export default function EcommerceShop() {
                   size="large"
                   type="submit"
                   variant="contained"
-                  loading={isSubmitting && loading}
+                  loading={isSubmitting && formLoading}
                 >
                   Add dish
                 </LoadingButton>
@@ -199,7 +204,8 @@ export default function EcommerceShop() {
             </FormikProvider>
           </Box>
         </Modal>
-        <ProductList products={PRODUCTS} />
+
+        <ProductList products={allDishes.storesAllDishes} />
         {/* <ProductCartWidget /> */}
       </Container>
     </Page>

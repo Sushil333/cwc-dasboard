@@ -15,3 +15,19 @@ export const createDishReducers = (state = {}, action) => {
       return state;
   }
 };
+
+export const fetchStoreDishesReducers = (state = {}, action) => {
+  switch (action.type) {
+    case actionType.GET_STORE_DISHES_REQ:
+      return { loading: true };
+
+    case actionType.GET_STORE_DISHES_SUCCESS:
+      return { loading: false, allDishes: action.payload };
+
+    case actionType.GET_STORE_DISHES_FAILED:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};

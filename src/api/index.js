@@ -20,5 +20,5 @@ export const getUserProfile = () => API.get('/api/user/get-user-profile');
 /**
  * Dish Routes
  */
-export const createDish = (formData) => API.post('/api/dish/create', formData);
-export const getStoreDishes = () => API.post('/api/dish/get-store-dishes');
+export const createDish = (formData) => API.post('/api/dishes/create', formData);
+export const getStoreDishes = () => API.get('/api/store/dishes/get-all');
