@@ -16,7 +16,7 @@ import MenuPopover from '../../components/MenuPopover';
 
 import account from '../../_mocks_/account';
 
-import { logout } from '../../actions/userActions';
+import { logout } from '../../redux/actions/userActions';
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [

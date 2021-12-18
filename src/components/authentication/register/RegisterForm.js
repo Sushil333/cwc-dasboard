@@ -14,7 +14,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { Stack, TextField, IconButton, InputAdornment, Alert, Collapse } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 //
-import { register } from '../../../actions/userActions';
+import { register } from '../../../redux/actions/userActions';
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {

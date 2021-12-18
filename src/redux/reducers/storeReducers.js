@@ -19,13 +19,13 @@ export const createDishReducers = (state = {}, action) => {
 export const fetchStoreDishesReducers = (state = {}, action) => {
   switch (action.type) {
     case actionType.GET_STORE_DISHES_REQ:
-      return { loading: true };
+      return { fetching: true };
 
     case actionType.GET_STORE_DISHES_SUCCESS:
-      return { loading: false, allDishes: action.payload };
+      return { fetching: false, allDishes: action.payload };
 
     case actionType.GET_STORE_DISHES_FAILED:
-      return { loading: false, error: action.payload };
+      return { fetching: false, error: action.payload };
 
     default:
       return state;

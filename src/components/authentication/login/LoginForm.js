@@ -25,7 +25,7 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-import { login } from '../../../actions/userActions';
+import { login } from '../../../redux/actions/userActions';
 // ----------------------------------------------------------------------
 
 const LoginForm = () => {

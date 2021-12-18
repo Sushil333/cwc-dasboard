@@ -11,7 +11,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 // import reportWebVitals from './reportWebVitals';
 
-import store from './store';
+import store from './redux/store';
 // ----------------------------------------------------------------------
 
 ReactDOM.render(

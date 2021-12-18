@@ -11,7 +11,7 @@ import { GoogleLogin } from 'react-google-login';
 // import facebookFill from '@iconify/icons-eva/facebook-fill';
 // material
 
-import * as actionType from '../../constants/userConstants';
+import * as actionType from '../../redux/constants/userConstants';
 
 // ----------------------------------------------------------------------
 

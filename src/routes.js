@@ -10,6 +10,7 @@ const DashboardApp = lazy(() => import('./pages/DashboardApp'));
 const Products = lazy(() => import('./pages/Products'));
 const Blog = lazy(() => import('./pages/Blog'));
 const User = lazy(() => import('./pages/User'));
+// const Managexr = lazy(() => import('./pages/Manager'));
 const NotFound = lazy(() => import('./pages/Page404'));
 
 // ----------------------------------------------------------------------
@@ -22,6 +23,7 @@ const routes = (isLoggedIn) => [
       { element: <Navigate to="/dashboard/app" replace /> },
       { path: 'app', element: <DashboardApp /> },
       { path: 'user', element: <User /> },
+      { path: 'managers', element: <User /> },
       { path: 'products', element: <Products /> },
       { path: 'blog', element: <Blog /> }
     ]

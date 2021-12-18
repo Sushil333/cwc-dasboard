@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 // material
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { Box, Card, Link, Typography, Stack, IconButton } from '@mui/material';
+import trash2Fill from '@iconify/icons-eva/trash-2-fill';
+import { Icon } from '@iconify/react';
 import { styled } from '@mui/material/styles';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
-//
-import Label from '../../Label';
-import ColorPreview from '../../ColorPreview';
+// //
+// import ColorPreview from '../../ColorPreview';
+import { fetchStoreDishes } from '../../../redux/actions/storeActions';
+import * as api from '../../../api';
 
 // ----------------------------------------------------------------------
 
@@ -26,40 +30,34 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  const { dishName, imageUrl, price, _id } = product;
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    console.log(_id);
+    const res = await api.deleteStoreDishes({ dishId: _id }).catch((err) => console.log(err));
+    if (res) {
+      dispatch(fetchStoreDishes());
+    }
+  };
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase'
-            }}
-          >
-            {status}
-          </Label>
-        )}
-        <ProductImgStyle alt={name} src={cover} />
+        <ProductImgStyle alt={dishName} src={imageUrl} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to="#" color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {dishName}
           </Typography>
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+          {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
-            <Typography
+            {/* <Typography
               component="span"
               variant="body1"
               sx={{
@@ -68,10 +66,12 @@ export default function ShopProductCard({ product }) {
               }}
             >
               {priceSale && fCurrency(priceSale)}
-            </Typography>
-            &nbsp;
+            </Typography> */}
             {fCurrency(price)}
           </Typography>
+          <IconButton variant="contained" color="success" onClick={handleDelete}>
+            <Icon icon={trash2Fill} width={24} height={24} />
+          </IconButton>
         </Stack>
       </Stack>
     </Card>

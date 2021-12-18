@@ -14,6 +14,7 @@ import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
+import adminSidebarConfig from './AdminSidebarConfig';
 
 // ----------------------------------------------------------------------
 
@@ -86,7 +87,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
-      <NavSection navConfig={sidebarConfig} />
+      <NavSection navConfig={userInfo.role === 'Admin' ? adminSidebarConfig : sidebarConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
 

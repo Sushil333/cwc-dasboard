@@ -25,8 +25,8 @@ import { Icon } from '@iconify/react';
 import Page from '../components/Page';
 import { ProductList } from '../components/_dashboard/products';
 //
-import PRODUCTS from '../_mocks_/products';
-import { createDish, fetchStoreDishes } from '../actions/storeActions';
+// import PRODUCTS from '../_mocks_/products';
+import { createDish, fetchStoreDishes } from '../redux/actions/storeActions';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ export default function EcommerceShop() {
   const { formLoading, error } = createDishStore;
 
   const getStoreDishesStore = useSelector((state) => state.fetchStoreDishes);
-  const { allDishes } = getStoreDishesStore;
+  const { allDishes, fetching } = getStoreDishesStore;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -79,6 +79,9 @@ export default function EcommerceShop() {
     validationSchema: formValidationScema,
     onSubmit: (value) => {
       dispatch(createDish(value, navigate));
+      dispatch(fetchStoreDishes());
+      setOpen(false);
+      formik.resetForm();
     }
   });
 
@@ -109,7 +112,6 @@ export default function EcommerceShop() {
   //   resetForm();
   // };
 
-  console.log(allDishes);
   return (
     <Page title="Dashboard: Products | Minimal-UI">
       <Container>
@@ -205,7 +207,8 @@ export default function EcommerceShop() {
           </Box>
         </Modal>
 
-        <ProductList products={allDishes.storesAllDishes} />
+        {allDishes && <ProductList products={allDishes.storesAllDishes} />}
+        {fetching && <div>Loading...</div>}
         {/* <ProductCartWidget /> */}
       </Container>
     </Page>

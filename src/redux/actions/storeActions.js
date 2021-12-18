@@ -1,5 +1,5 @@
 import * as actionType from '../constants/storeConstants';
-import * as api from '../api/index';
+import * as api from '../../api/index';
 
 export const createDish = (formData, navigate) => async (dispatch) => {
   try {

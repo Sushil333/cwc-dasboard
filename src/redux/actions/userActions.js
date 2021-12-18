@@ -1,5 +1,5 @@
 import * as actionType from '../constants/userConstants';
-import * as api from '../api/index';
+import * as api from '../../api/index';
 
 export const login = (formData, navigate) => async (dispatch) => {
   try {
