@@ -7,7 +7,7 @@ import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { Icon } from '@iconify/react';
 import { styled } from '@mui/material/styles';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
+// import { fCurrency } from '../../../utils/formatNumber';
 // //
 // import ColorPreview from '../../ColorPreview';
 import { fetchStoreDishes } from '../../../redux/actions/storeActions';
@@ -67,7 +67,7 @@ export default function ShopProductCard({ product }) {
             >
               {priceSale && fCurrency(priceSale)}
             </Typography> */}
-            {fCurrency(price)}
+            {/* fCurrency(price) */}₹ {price}
           </Typography>
           <IconButton variant="contained" color="success" onClick={handleDelete}>
             <Icon icon={trash2Fill} width={24} height={24} />
