@@ -1,7 +1,7 @@
 import * as actionType from '../constants/storeConstants';
 import * as api from '../../api/index';
 
-export const createDish = (formData, navigate) => async (dispatch) => {
+export const createDish = (formData) => async (dispatch) => {
   try {
     dispatch({
       type: actionType.CREATE_DISH_REQUEST
@@ -13,8 +13,6 @@ export const createDish = (formData, navigate) => async (dispatch) => {
       type: actionType.CREATE_DISH_SUCCESS,
       payload: data
     });
-
-    navigate('/dashboard/products', { replace: true });
   } catch (error) {
     console.log(error.response);
     dispatch({

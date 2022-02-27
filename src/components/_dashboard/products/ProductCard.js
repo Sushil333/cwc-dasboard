@@ -1,3 +1,4 @@
+// import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -30,7 +31,7 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { dishName, imageUrl, price, _id } = product;
+  const { dishName, imgUrl, price, _id } = product;
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
@@ -44,7 +45,7 @@ export default function ShopProductCard({ product }) {
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        <ProductImgStyle alt={dishName} src={imageUrl} />
+        <ProductImgStyle alt={dishName} src={imgUrl} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>

@@ -1,6 +1,5 @@
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material
@@ -35,7 +34,6 @@ export default function EcommerceShop() {
   const [alertOpen, setAlertOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const createDishStore = useSelector((state) => state.createDish);
   const { formLoading, error } = createDishStore;
@@ -65,23 +63,29 @@ export default function EcommerceShop() {
   const formValidationScema = Yup.object().shape({
     dishName: Yup.string().required('Dish name required'),
     description: Yup.string().required('Description is rquired'),
-    price: Yup.string().required('Dish price is rquired'),
-    imageUrl: Yup.string().required('Image URL is rquired')
+    price: Yup.string().required('Dish price is rquired')
+    // imageUrl: Yup.string().required('Image url is rquired')
+    // dishImg: Yup.object().required('This field is required')
   });
 
   const formik = useFormik({
     initialValues: {
       dishName: '',
       description: '',
-      price: '',
-      imageUrl: ''
+      price: ''
     },
     validationSchema: formValidationScema,
-    onSubmit: (value) => {
-      dispatch(createDish(value, navigate));
+    onSubmit: (values) => {
+      const data = new FormData();
+      data.append('dishName', values.dishName);
+      data.append('description', values.description);
+      data.append('price', values.price);
+      data.append('dishImg', values.dishImg);
+
+      dispatch(createDish(data));
       dispatch(fetchStoreDishes());
-      setOpen(false);
-      formik.resetForm();
+      // setOpen(false);
+      // formik.resetForm();
     }
   });
 
@@ -97,7 +101,7 @@ export default function EcommerceShop() {
     p: 4
   };
 
-  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, handleSubmit, setFieldValue, getFieldProps } = formik;
 
   // const handleOpenFilter = () => {
   //   setOpenFilter(true);
@@ -133,7 +137,12 @@ export default function EcommerceShop() {
               Create Dish
             </Typography>
             <FormikProvider value={formik}>
-              <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+              <Form
+                autoComplete="off"
+                noValidate
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+              >
                 <Stack sx={{ mb: 2 }}>
                   {error && (
                     <Collapse in={alertOpen}>
@@ -161,7 +170,7 @@ export default function EcommerceShop() {
                     sx={{ mb: 2 }}
                   />
 
-                  <TextField
+                  {/* <TextField
                     fullWidth
                     type="url"
                     label="Image Url"
@@ -169,7 +178,21 @@ export default function EcommerceShop() {
                     error={Boolean(touched.imageUrl && errors.imageUrl)}
                     helperText={touched.imageUrl && errors.imageUrl}
                     sx={{ mb: 2 }}
-                  />
+                  /> */}
+                  <Stack sx={{ mb: 2 }}>
+                    {/* <Button variant="contained" component="label" startIcon={<CloudUploadIcon />}>
+                      Choose Avatar */}
+                    <input
+                      accept="image/*"
+                      id="contained-button-file"
+                      type="file"
+                      name="dishImg"
+                      onChange={(e) => {
+                        setFieldValue('dishImg', e.currentTarget.files[0]);
+                      }}
+                    />
+                    {/* </Button> */}
+                  </Stack>
 
                   <TextField
                     fullWidth
