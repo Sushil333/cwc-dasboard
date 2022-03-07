@@ -8,10 +8,11 @@ const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const DashboardApp = lazy(() => import('./pages/DashboardApp'));
 const Products = lazy(() => import('./pages/Products'));
-const Blog = lazy(() => import('./pages/Blog'));
+const BasicTable = lazy(() => import('./pages/admin-only/StoreRequests'));
 const User = lazy(() => import('./pages/User'));
-// const Managexr = lazy(() => import('./pages/Manager'));
 const NotFound = lazy(() => import('./pages/Page404'));
+// const Blog = lazy(() => import('./pages/Blog'));
+// const Managexr = lazy(() => import('./pages/Manager'));
 
 // ----------------------------------------------------------------------
 
@@ -23,9 +24,10 @@ const routes = (isLoggedIn) => [
       { element: <Navigate to="/dashboard/app" replace /> },
       { path: 'app', element: <DashboardApp /> },
       { path: 'user', element: <User /> },
-      { path: 'managers', element: <User /> },
+      { path: 'store/managers', element: <User /> },
       { path: 'products', element: <Products /> },
-      { path: 'blog', element: <Blog /> }
+      // { path: 'blog', element: <Blog /> },
+      { path: 'store/requests', element: <BasicTable /> }
     ]
   },
   {
