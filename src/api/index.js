@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://42e9-34-82-78-144.ngrok.io/' });
+const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
 // const API = axios.create({
-//   baseURL: 'https://fcdd-34-82-129-103.ngrok.io/'
+//   baseURL: 'https://42e9-34-82-78-144.ngrok.io/'
 // });
 
 API.interceptors.request.use((req) => {
