@@ -229,12 +229,13 @@ export default function EcommerceShop() {
             </FormikProvider>
           </Box>
         </Modal>
-
         {allDishes && <ProductList products={allDishes.storesAllDishes} />}
         {fetching && <div>Loading...</div>}
-        {!fetching && !allDishes && <h4 align="center">No Records Found</h4>}
+        {!fetching && allDishes && allDishes.storesAllDishes <= 0 && (
+          <h4 align="center">No Records Found</h4>
+        )}
         {/* <ProductCartWidget /> */}
-        {noStoreError && <div>{noStoreError}</div>}
+        {!fetching && noStoreError && <div>{noStoreError}</div>}
       </Container>
     </Page>
   );
