@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Table from '@mui/material/Table';
+import Snackbar from '@mui/material/Snackbar';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -55,17 +56,29 @@ export default function BasicTable() {
   const [loading, setLoading] = useState(true);
   const [filterTerm, setFilterTerm] = useState('Pending');
   const [modalState, setModalState] = useState({ open: false });
+  const [snackbarState, setSnackbarState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+    message: ''
+  });
 
+  const { vertical, horizontal, open, message } = snackbarState;
   const handleOpen = (imgUrl) => {
     setModalState({ open: true, imgUrl });
   };
   const handleClose = () => setModalState({ open: false });
 
   const sendApprovedMail = async (id) => {
-    console.log(id);
-    const res = await API.sendApprovedMail(id);
-    console.log(res.data.data);
-    fetchData();
+    try {
+      const res = await API.sendApprovedMail(id);
+      if (res)
+        setSnackbarState({ ...snackbarState, open: true, message: 'Email sent successfully' });
+      fetchData();
+    } catch (err) {
+      setSnackbarState({ ...snackbarState, open: true, message: 'Unable sent send Mail' });
+      console.log(err);
+    }
   };
 
   const fetchData = () => {
@@ -105,6 +118,13 @@ export default function BasicTable() {
 
   return (
     <Page title="User | Minimal-UI">
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        message={message}
+        key={vertical + horizontal}
+        autoHideDuration={3000}
+      />
       <Container>
         <Typography variant="h4" gutterBottom>
           Store Requests
