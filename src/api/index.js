@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com' });
 // const API = axios.create({
-//   baseURL: 'https://2681-34-127-94-150.ngrok.io/'
+//   baseURL: 'https://fcdd-34-82-129-103.ngrok.io/'
 // });
 
 API.interceptors.request.use((req) => {
@@ -16,17 +16,16 @@ API.interceptors.request.use((req) => {
 /**
  * Authentication Routes
  */
-export const signIn = (formData) => API.post('/api/user/signin', formData);
-export const signUp = (formData) => API.post('/api/user/signup', formData);
-export const getUserProfile = () => API.get('/api/user/get-user-profile');
-export const getAllManagers = () => API.get('/api/user/get-all-managers');
-export const deactivateUser = (formData) => API.post('/api/user/deactivate-user', formData);
+export const signIn = (formData) => API.post('/api/managers/signin', formData);
+export const getUserProfile = () => API.get('/api/managers/get-user-profile');
+export const getAllManagers = () => API.get('/api/managers/get-all-managers');
+export const deactivateUser = (formData) => API.post('/api/managers/deactivate-user', formData);
 
 /**
  * Stoe Routes
  */
 export const storeRequests = () => API.get('/api/store/requests');
-export const sendApprovedMail = (emailID) => API.get(`/api/store/send-approved-mail/${emailID}`);
+export const sendApprovedMail = (id) => API.get(`/api/store/send-approved-mail/${id}`);
 export const sendRejectionMail = (formData) => API.get('/api/store/send-rejection-mail', formData);
 
 /**

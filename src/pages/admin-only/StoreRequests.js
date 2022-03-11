@@ -13,11 +13,14 @@ import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
 import checkFill from '@iconify/icons-eva/checkmark-fill';
 import linkFill from '@iconify/icons-eva/link-fill';
+import trashFill from '@iconify/icons-eva/trash-fill';
 
 import Page from '../../components/Page';
 import * as API from '../../api/index';
@@ -50,19 +53,22 @@ const style = {
 export default function BasicTable() {
   const [storeRequets, setStoreRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [filterTerm, setFilterTerm] = useState('Pending');
   const [modalState, setModalState] = useState({ open: false });
+
   const handleOpen = (imgUrl) => {
     setModalState({ open: true, imgUrl });
   };
   const handleClose = () => setModalState({ open: false });
 
-  const sendApprovedMail = async (emailID) => {
-    const res = await API.sendApprovedMail(emailID);
+  const sendApprovedMail = async (id) => {
+    console.log(id);
+    const res = await API.sendApprovedMail(id);
     console.log(res.data.data);
+    fetchData();
   };
 
-  useEffect(() => {
+  const fetchData = () => {
     API.storeRequests()
       .then((res) => {
         console.log(res.data.data);
@@ -72,13 +78,30 @@ export default function BasicTable() {
           email: d.email,
           phoneNo: d.phoneNo,
           aadharCard: d.aadharCard,
-          panCard: d.panCard
+          panCard: d.panCard,
+          status: d.status
         }));
         setStoreRequests(ll);
         setLoading(false);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
+
+  const buttons = [
+    <Button key="one" onClick={() => setFilterTerm('Pending')}>
+      Pending
+    </Button>,
+    <Button key="two" onClick={() => setFilterTerm('Approved')}>
+      Approved
+    </Button>,
+    <Button key="three" onClick={() => setFilterTerm('Rejected')}>
+      Rejected
+    </Button>
+  ];
 
   return (
     <Page title="User | Minimal-UI">
@@ -86,6 +109,14 @@ export default function BasicTable() {
         <Typography variant="h4" gutterBottom>
           Store Requests
         </Typography>
+
+        <ButtonGroup size="small" aria-label="small button group">
+          {buttons}
+        </ButtonGroup>
+        {/* <Chip label="All" onClick={() => setFilterTerm('Pending')} />
+        <Chip label="Approved" onClick={() => setFilterTerm('Approved')} />
+        <Chip label="Rejected" onClick={() => setFilterTerm('Rejected')} /> */}
+
         <TableContainer component={Paper} elevation={4}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -95,8 +126,9 @@ export default function BasicTable() {
                 <TableCell align="right">Mobile No</TableCell>
                 <TableCell align="right">View Aadhar</TableCell>
                 <TableCell align="right">View Pan</TableCell>
-                <TableCell align="right">Approve</TableCell>
-                <TableCell align="right">Reject</TableCell>
+                {filterTerm === 'Pending' && <TableCell align="right">Approve</TableCell>}
+                {filterTerm === 'Pending' && <TableCell align="right">Reject</TableCell>}
+                {filterTerm !== 'Pending' && <TableCell align="right">Delete</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -111,51 +143,68 @@ export default function BasicTable() {
 
               {/* loading data */}
               {!loading &&
-                storeRequets.map((row) => (
-                  <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="row">
-                      {row.storeName}
-                    </TableCell>
-                    <TableCell align="right">{row.email}</TableCell>
-                    <TableCell align="right">{row.phoneNo}</TableCell>
+                storeRequets
+                  .filter((val) => val.status === filterTerm)
+                  .map((row) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.storeName}
+                      </TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.phoneNo}</TableCell>
 
-                    {/* aadhar modal */}
-                    <TableCell align="right">
-                      <IconButton
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
-                        onClick={() => handleOpen(row.aadharCard)}
-                      >
-                        <Icon icon={linkFill} />
-                      </IconButton>
-                    </TableCell>
+                      {/* aadhar modal */}
+                      <TableCell align="right">
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                          onClick={() => handleOpen(row.aadharCard)}
+                        >
+                          <Icon icon={linkFill} />
+                        </IconButton>
+                      </TableCell>
 
-                    {/* Pan card modal */}
-                    <TableCell align="right">
-                      <IconButton
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
-                        onClick={() => handleOpen(row.panCard)}
-                      >
-                        <Icon icon={linkFill} />
-                      </IconButton>
-                    </TableCell>
+                      {/* Pan card modal */}
+                      <TableCell align="right">
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                          onClick={() => handleOpen(row.panCard)}
+                        >
+                          <Icon icon={linkFill} />
+                        </IconButton>
+                      </TableCell>
 
-                    <TableCell align="right">
-                      <IconButton color="success" onClick={() => sendApprovedMail(row.email)}>
-                        <Icon icon={checkFill} />
-                      </IconButton>
-                    </TableCell>
+                      {filterTerm === 'Pending' && (
+                        <>
+                          <TableCell align="right">
+                            <IconButton color="success" onClick={() => sendApprovedMail(row.id)}>
+                              <Icon icon={checkFill} />
+                            </IconButton>
+                          </TableCell>
 
-                    <TableCell align="right">
-                      <IconButton color="error">
-                        <Icon icon={closeFill} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <TableCell align="right">
+                            <IconButton color="error">
+                              <Icon icon={closeFill} />
+                            </IconButton>
+                          </TableCell>
+                        </>
+                      )}
+
+                      {filterTerm !== 'Pending' && (
+                        <TableCell align="right">
+                          <IconButton color="error">
+                            <Icon icon={trashFill} />
+                          </IconButton>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </TableContainer>

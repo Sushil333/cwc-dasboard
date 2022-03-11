@@ -39,7 +39,7 @@ export default function EcommerceShop() {
   const { formLoading, error } = createDishStore;
 
   const getStoreDishesStore = useSelector((state) => state.fetchStoreDishes);
-  const { allDishes, fetching } = getStoreDishesStore;
+  const { allDishes, fetching, error: noStoreError } = getStoreDishesStore;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -232,7 +232,9 @@ export default function EcommerceShop() {
 
         {allDishes && <ProductList products={allDishes.storesAllDishes} />}
         {fetching && <div>Loading...</div>}
+        {!fetching && !allDishes && <h4 align="center">No Records Found</h4>}
         {/* <ProductCartWidget /> */}
+        {noStoreError && <div>{noStoreError}</div>}
       </Container>
     </Page>
   );

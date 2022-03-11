@@ -5,7 +5,7 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 const Login = lazy(() => import('./pages/Login'));
-const Register = lazy(() => import('./pages/Register'));
+// const Register = lazy(() => import('./pages/Register'));
 const DashboardApp = lazy(() => import('./pages/DashboardApp'));
 const Products = lazy(() => import('./pages/Products'));
 const BasicTable = lazy(() => import('./pages/admin-only/StoreRequests'));
@@ -35,7 +35,7 @@ const routes = (isLoggedIn) => [
     element: <LogoOnlyLayout />,
     children: [
       { path: 'login', element: <Login /> },
-      { path: 'register', element: <Register /> },
+      // { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
       {
         path: '/',
