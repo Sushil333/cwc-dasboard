@@ -6,9 +6,7 @@ import {
   AppNewUsers,
   AppBugReports,
   AppItemOrders,
-  AppNewsUpdate,
-  AppWeeklySales,
-  AppTrafficBySite
+  AppWeeklySales
 } from '../components/_dashboard/app';
 
 // ----------------------------------------------------------------------
@@ -50,17 +48,17 @@ export default function DashboardApp() {
             <AppCurrentSubject />
           </Grid> */}
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline />
           </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={8}>
             <AppTasks />

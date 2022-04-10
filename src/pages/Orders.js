@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CSVLink } from 'react-csv';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,9 +11,18 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
 import Page from '../components/Page';
 import * as API from '../api/index';
+
+const TableTitle = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: theme.spacing(3)
+}));
 
 export default function Orders() {
   const [placedOrders, setPlacedOrders] = useState(null);
@@ -34,9 +44,18 @@ export default function Orders() {
   return (
     <Page title="User | Minimal-UI">
       <Container>
-        <Typography variant="h4" gutterBottom>
-          All orders
-        </Typography>
+        <TableTitle className="d-flex">
+          <Typography variant="h4" gutterBottom>
+            All orders
+          </Typography>
+          {placedOrders && (
+            <CSVLink data={placedOrders} filename="my-file.csv" target="_blank">
+              <Button variant="contained" color="secondary">
+                Export to CSV
+              </Button>
+            </CSVLink>
+          )}
+        </TableTitle>
 
         <TableContainer component={Paper} elevation={4}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
