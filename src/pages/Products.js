@@ -25,18 +25,23 @@ import Page from '../components/Page';
 import { ProductList } from '../components/_dashboard/products';
 //
 // import PRODUCTS from '../_mocks_/products';
-import { createDish, fetchStoreDishes } from '../redux/actions/storeActions';
-
+import { fetchStoreDishes } from '../redux/actions/storeActions';
+import * as api from '../api/index';
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
   // const [openFilter, setOpenFilter] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [error, setError] = useState('');
+  const [formLoading, setFormLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const createDishStore = useSelector((state) => state.createDish);
-  const { formLoading, error } = createDishStore;
+  // const createDishStore = useSelector((state) => {
+  //   console.log(state.createDish);
+  //   return state.createDish;
+  // });
+  // const { loading: formLoading, error } = createDishStore;
 
   const getStoreDishesStore = useSelector((state) => state.fetchStoreDishes);
   const { allDishes, fetching, error: noStoreError } = getStoreDishesStore;
@@ -47,15 +52,7 @@ export default function EcommerceShop() {
 
   useEffect(() => {
     dispatch(fetchStoreDishes());
-    if (error) {
-      setAlertOpen(true);
-    } else {
-      setAlertOpen(false);
-    }
-    if (!formLoading) {
-      setOpen(false);
-    }
-  }, [error, formLoading, dispatch]);
+  }, [dispatch]);
 
   // const URL =
   //   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
@@ -76,16 +73,28 @@ export default function EcommerceShop() {
     },
     validationSchema: formValidationScema,
     onSubmit: (values) => {
+      setFormLoading(true);
       const data = new FormData();
       data.append('dishName', values.dishName);
       data.append('description', values.description);
       data.append('price', values.price);
       data.append('dishImg', values.dishImg);
 
-      dispatch(createDish(data));
-      dispatch(fetchStoreDishes());
-      // setOpen(false);
-      // formik.resetForm();
+      api
+        .createDish(data)
+        .then(() => {
+          setOpen(false);
+          setFormLoading(false);
+          formik.resetForm();
+          dispatch(fetchStoreDishes());
+        })
+        .catch((err) => {
+          console.log(err);
+          setOpen(false);
+          setFormLoading(false);
+          formik.resetForm();
+          setError(err);
+        });
     }
   });
 

@@ -21,6 +21,11 @@ const sidebarConfig = [
     title: 'product',
     path: '/dashboard/products',
     icon: getIcon(shoppingBagFill)
+  },
+  {
+    title: 'orders',
+    path: '/dashboard/orders',
+    icon: getIcon(shoppingBagFill)
   }
 ];
 

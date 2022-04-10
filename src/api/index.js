@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
-// const API = axios.create({
-//   baseURL: 'https://42e9-34-82-78-144.ngrok.io/'
-// });
+// const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
+const API = axios.create({
+  baseURL: 'https://e3f0-35-247-67-53.ngrok.io/'
+});
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('userInfo')) {
@@ -25,6 +25,7 @@ export const deactivateUser = (formData) => API.post('/api/managers/deactivate-u
  * Stoe Routes
  */
 export const storeRequests = () => API.get('/api/store/requests');
+export const getPlacedOrders = () => API.get('/api/store/orders');
 export const sendApprovedMail = (id) => API.get(`/api/store/send-approved-mail/${id}`);
 export const sendRejectionMail = (formData) => API.get('/api/store/send-rejection-mail', formData);
 
