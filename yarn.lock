@@ -9353,6 +9353,15 @@ prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, 
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
+prop-types@^15.8.1:
+  version "15.8.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
+  integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.13.1"
+
 property-expr@^2.0.4:
   version "2.0.4"
   resolved "https://registry.npmjs.org/property-expr/-/property-expr-2.0.4.tgz"
@@ -9605,7 +9614,7 @@ react-helmet-async@^1.1.2:
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
 
-react-is@^16.7.0, react-is@^16.8.1:
+react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -9709,6 +9718,13 @@ react-scripts@^4.0.1:
     workbox-webpack-plugin "5.1.4"
   optionalDependencies:
     fsevents "^2.1.3"
+
+react-to-print@^2.14.6:
+  version "2.14.6"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.14.6.tgz#a6fddfaee207e1093e87b5eceb5dfca46b5922cf"
+  integrity sha512-LlhbfNAzPm6AOGmCcsVzgyDIBFs5lTXOMpRL+IUmZRZU04i79rujEj5nXKmbRTPTZV8ezLIHSY6ecj4y0lD5iA==
+  dependencies:
+    prop-types "^15.8.1"
 
 react-transition-group@^4.4.2:
   version "4.4.2"

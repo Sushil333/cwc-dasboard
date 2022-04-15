@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CSVLink } from 'react-csv';
 
 import Table from '@mui/material/Table';
@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import ReactToPrint from 'react-to-print';
+
+import ComponentToPrint from './ComponentToPrint';
 
 import Page from '../components/Page';
 import * as API from '../api/index';
@@ -27,6 +30,8 @@ const TableTitle = styled('div')(({ theme }) => ({
 export default function Orders() {
   const [placedOrders, setPlacedOrders] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  let componentRef = useRef();
 
   const fetchData = () => {
     API.getPlacedOrders()
@@ -66,6 +71,7 @@ export default function Orders() {
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">Address</TableCell>
                 <TableCell align="right">Ordered Time</TableCell>
+                <TableCell align="right">Invoice</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -92,6 +98,15 @@ export default function Orders() {
                     <TableCell align="right">{row.price}</TableCell>
                     <TableCell align="right">{row.address}</TableCell>
                     <TableCell align="right">{new Date(row.createdAt).toLocaleString()}</TableCell>
+                    <TableCell align="right">
+                      <ReactToPrint
+                        trigger={() => <Button>Print Invoice</Button>}
+                        content={() => componentRef}
+                      />
+                    </TableCell>
+                    <TableCell style={{ display: 'none' }} key={row._id}>
+                      <ComponentToPrint ref={(el) => (componentRef = el)} data={row} />
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
