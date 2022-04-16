@@ -21,7 +21,7 @@ class ComponentToPrint extends React.Component {
           <img
             src="/static/logo.jpeg"
             alt="logo"
-            height="120px"
+            height="250px"
             style={{ margin: '0 auto', paddingTop: '1em' }}
           />
           Cooked With Care
