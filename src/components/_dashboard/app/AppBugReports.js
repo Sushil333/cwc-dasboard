@@ -3,8 +3,9 @@ import bugFilled from '@iconify/icons-ant-design/dollar';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fCurrency } from '../../../utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
@@ -34,15 +35,17 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 234;
+AppBugReports.propTypes = {
+  revenue: PropTypes.number
+};
 
-export default function AppBugReports() {
+export default function AppBugReports({ revenue }) {
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Icon icon={bugFilled} width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fCurrency(parseInt(revenue, 10))}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Total Revenue
       </Typography>

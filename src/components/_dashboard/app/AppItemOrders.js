@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import windowsFilled from '@iconify/icons-ant-design/number';
+import PropTypes from 'prop-types';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
@@ -34,15 +35,17 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1723315;
+AppItemOrders.propTypes = {
+  orders: PropTypes.number
+};
 
-export default function AppItemOrders() {
+export default function AppItemOrders({ orders }) {
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Icon icon={windowsFilled} width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fShortenNumber(orders)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Total Orders
       </Typography>

@@ -1,21 +1,40 @@
+import React, { useState, useEffect } from 'react';
 // material
-import { Box, Container, Typography, Card, Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
+
 // components
 import Page from '../components/Page';
-import { fCurrency } from '../utils/formatNumber';
+import * as API from '../api/index';
+import AppWeeklySales from '../components/_dashboard/app/AppWeeklySales';
+import AppNewUsers from '../components/_dashboard/app/AppNewUsers';
+import AppItemOrders from '../components/_dashboard/app/AppItemOrders';
+import AppBugReports from '../components/_dashboard/app/AppBugReports';
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Card)(({ theme }) => ({
-  boxShadow: 'none',
-  textAlign: 'center',
-  padding: theme.spacing(5, 0),
-  color: theme.palette.info.darker,
-  backgroundColor: theme.palette.info.lighter
-}));
-
 export default function DashboardApp() {
+  const [displayData, setDisplayData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = (id) => {
+    API.getDisplayData(id)
+      .then((res) => {
+        setDisplayData(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    API.getUserStore().then((res) => {
+      fetchData(res.data.data._id);
+    });
+  }, []);
+
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -23,22 +42,7 @@ export default function DashboardApp() {
           <Typography variant="h4">Hi, Welcome Back</Typography>
         </Box>
 
-        <Grid container spacing={2}>
-          {/* left side */}
-          <Grid item xs={8} sm={12} md={8}>
-            k
-          </Grid>
-          {/* right side */}
-          <Grid item xs={3} sm={12} md={3}>
-            <RootStyle>
-              <Typography variant="h2" sx={{ color: 'text.primary' }}>
-                ₹{fCurrency(2000)}
-              </Typography>
-              <Typography variant="subtitle2">Total Revenue</Typography>
-            </RootStyle>
-          </Grid>
-        </Grid>
-        {/* <Grid container spacing={3}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
@@ -46,44 +50,14 @@ export default function DashboardApp() {
             <AppNewUsers />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
+            {loading && <Skeleton variant="rectangular" width={230} height={230} />}
+            {!loading && <AppItemOrders orders={displayData.totalOrders} />}
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite />
-          </Grid> */}
-
-        {/* <Grid item xs={12} md={6} lg={8}>
-            <AppTasks />
-          </Grid> */}
-        {/* </Grid> */}
+            {loading && <Skeleton variant="rectangular" width={230} height={230} />}
+            {!loading && <AppBugReports revenue={displayData.totalRevenue} />}
+          </Grid>
+        </Grid>
       </Container>
     </Page>
   );
