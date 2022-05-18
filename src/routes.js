@@ -11,9 +11,8 @@ const Products = lazy(() => import('./pages/Products'));
 const Orders = lazy(() => import('./pages/Orders'));
 const BasicTable = lazy(() => import('./pages/admin-only/StoreRequests'));
 const User = lazy(() => import('./pages/User'));
-const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/Page404'));
-// const Blog = lazy(() => import('./pages/Blog'));
+const Profile = lazy(() => import('./pages/Profile'));
 // const Managexr = lazy(() => import('./pages/Manager'));
 
 // ----------------------------------------------------------------------
