@@ -20,6 +20,7 @@ export const signIn = (formData) => API.post('/api/managers/signin', formData);
 export const getUserProfile = () => API.get('/api/managers/get-user-profile');
 export const getAllManagers = () => API.get('/api/managers/get-all-managers');
 export const deactivateUser = (formData) => API.post('/api/managers/deactivate-user', formData);
+export const resetPassword = (formData) => API.post('/api/managers/reset-password', formData);
 
 /**
  * Stoe Routes
