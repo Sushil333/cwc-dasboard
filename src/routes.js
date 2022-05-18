@@ -11,6 +11,7 @@ const Products = lazy(() => import('./pages/Products'));
 const Orders = lazy(() => import('./pages/Orders'));
 const BasicTable = lazy(() => import('./pages/admin-only/StoreRequests'));
 const User = lazy(() => import('./pages/User'));
+const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/Page404'));
 // const Blog = lazy(() => import('./pages/Blog'));
 // const Managexr = lazy(() => import('./pages/Manager'));
@@ -28,7 +29,7 @@ const routes = (isLoggedIn) => [
       { path: 'store/managers', element: <User /> },
       { path: 'products', element: <Products /> },
       { path: 'orders', element: <Orders /> },
-      // { path: 'blog', element: <Blog /> },
+      { path: 'profile', element: <Profile /> },
       { path: 'store/requests', element: <BasicTable /> }
     ]
   },
