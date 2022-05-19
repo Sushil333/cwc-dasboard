@@ -9,8 +9,8 @@ import Skeleton from '@mui/material/Skeleton';
 // components
 import Page from '../components/Page';
 import * as API from '../api/index';
-import AppWeeklySales from '../components/_dashboard/app/AppWeeklySales';
-import AppNewUsers from '../components/_dashboard/app/AppNewUsers';
+// import AppWeeklySales from '../components/_dashboard/app/AppWeeklySales';
+// import AppNewUsers from '../components/_dashboard/app/AppNewUsers';
 import AppItemOrders from '../components/_dashboard/app/AppItemOrders';
 import AppBugReports from '../components/_dashboard/app/AppBugReports';
 

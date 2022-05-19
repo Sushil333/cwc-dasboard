@@ -39,3 +39,4 @@ export const createDish = (formData) => API.post('/api/store/dishes/create', for
 // export const getDishImg = (fileKey) => API.get(`/api/store/dish/image/${fileKey}`);
 export const deleteStoreDishes = (dishId) => API.post('/api/store/dishes/delete', dishId);
 export const getStoreDishes = () => API.get('/api/store/dishes/get-store-dishes');
+export const disableDish = (formData) => API.get('/api/store/dishes/disable-dish', formData);
