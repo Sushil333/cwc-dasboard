@@ -9,8 +9,8 @@ import Skeleton from '@mui/material/Skeleton';
 // components
 import Page from '../components/Page';
 import * as API from '../api/index';
-import AppWeeklySales from '../components/_dashboard/app/AppWeeklySales';
-import AppNewUsers from '../components/_dashboard/app/AppNewUsers';
+// import AppWeeklySales from '../components/_dashboard/app/AppWeeklySales';
+// import AppNewUsers from '../components/_dashboard/app/AppNewUsers';
 import AppItemOrders from '../components/_dashboard/app/AppItemOrders';
 import AppBugReports from '../components/_dashboard/app/AppBugReports';
 
@@ -43,12 +43,12 @@ export default function DashboardApp() {
         </Box>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <AppNewUsers />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6} md={3}>
             {loading && <Skeleton variant="rectangular" width={230} height={230} />}
             {!loading && <AppItemOrders orders={displayData.totalOrders} />}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // material
-import { Box, Card, Link, Typography, Stack, IconButton } from '@mui/material';
+import { Box, Card, Link, Typography, Stack, IconButton, Button } from '@mui/material';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { Icon } from '@iconify/react';
 import { styled } from '@mui/material/styles';
@@ -70,9 +70,13 @@ export default function ShopProductCard({ product }) {
             </Typography> */}
             {/* fCurrency(price) */}₹ {price}
           </Typography>
-          <IconButton variant="contained" color="success" onClick={handleDelete}>
-            <Icon icon={trash2Fill} width={24} height={24} />
-          </IconButton>
+          <div>
+            <IconButton variant="contained" color="success" onClick={handleDelete}>
+              <Icon icon={trash2Fill} width={24} height={24} />
+            </IconButton>
+
+            {true ? <Button>Enable</Button> : <Button>Disable</Button>}
+          </div>
         </Stack>
       </Stack>
     </Card>

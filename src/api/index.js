@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
-// const API = axios.create({
-//   baseURL: 'https://f8b4-34-82-216-133.ngrok.io/'
-// });
+// const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
+const API = axios.create({
+  baseURL: 'https://baba-34-145-124-181.ngrok.io/'
+});
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('userInfo')) {
@@ -39,3 +39,4 @@ export const createDish = (formData) => API.post('/api/store/dishes/create', for
 // export const getDishImg = (fileKey) => API.get(`/api/store/dish/image/${fileKey}`);
 export const deleteStoreDishes = (dishId) => API.post('/api/store/dishes/delete', dishId);
 export const getStoreDishes = () => API.get('/api/store/dishes/get-store-dishes');
+export const disableDish = (formData) => API.get('/api/store/dishes/disable-dish', formData);

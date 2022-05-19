@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
+import AdminDashboardApp from './pages/AdminDashboardApp';
 //
 const Login = lazy(() => import('./pages/Login'));
 // const Register = lazy(() => import('./pages/Register'));
@@ -17,13 +18,16 @@ const Profile = lazy(() => import('./pages/Profile'));
 
 // ----------------------------------------------------------------------
 
-const routes = (isLoggedIn) => [
+const routes = (userInfo) => [
   {
     path: '/dashboard',
-    element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
+    element: userInfo ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { element: <Navigate to="/dashboard/app" replace /> },
-      { path: 'app', element: <DashboardApp /> },
+      {
+        path: 'app',
+        element: userInfo?.role === 'Manager' ? <DashboardApp /> : <AdminDashboardApp />
+      },
       { path: 'user', element: <User /> },
       { path: 'store/managers', element: <User /> },
       { path: 'products', element: <Products /> },
@@ -41,7 +45,7 @@ const routes = (isLoggedIn) => [
       { path: '404', element: <NotFound /> },
       {
         path: '/',
-        element: isLoggedIn ? <Navigate to="/dashboard/app" /> : <Navigate to="/login" />
+        element: userInfo ? <Navigate to="/dashboard/app" /> : <Navigate to="/login" />
       },
       { path: '*', element: <Navigate to="/404" /> }
     ]
