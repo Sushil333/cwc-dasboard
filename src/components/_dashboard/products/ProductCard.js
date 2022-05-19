@@ -74,8 +74,8 @@ export default function ShopProductCard({ product }) {
             <IconButton variant="contained" color="success" onClick={handleDelete}>
               <Icon icon={trash2Fill} width={24} height={24} />
             </IconButton>
-
-            {true ? <Button>Enable</Button> : <Button>Disable</Button>}
+            <Button>Enable</Button>
+            <Button>Disable</Button>
           </div>
         </Stack>
       </Stack>
