@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
-import AdminDashboardApp from './pages/AdminDashboardApp';
 //
 const Login = lazy(() => import('./pages/Login'));
 // const Register = lazy(() => import('./pages/Register'));
@@ -26,7 +25,12 @@ const routes = (userInfo) => [
       { element: <Navigate to="/dashboard/app" replace /> },
       {
         path: 'app',
-        element: userInfo?.role === 'Manager' ? <DashboardApp /> : <Navigate to="/store/managers" />
+        element:
+          userInfo?.role === 'Manager' ? (
+            <DashboardApp />
+          ) : (
+            <Navigate to="/dashboard/store/managers" />
+          )
       },
       { path: 'user', element: <User /> },
       { path: 'store/managers', element: <User /> },

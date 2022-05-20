@@ -118,7 +118,7 @@ export default function Profile() {
           <Typography variant="h3">{user.name}</Typography>
         </Stack>
 
-        <form style={{ maxWidth: '450px' }} onSubmit={handleSubmit}>
+        <form style={{ maxWidth: '450px' }} onSubmit={handleSubmit} autoComplete="off">
           <Paper elevation={3} sx={{ padding: '2em' }}>
             <Stack spacing={3}>
               <Typography variant="h5">Change Password</Typography>
