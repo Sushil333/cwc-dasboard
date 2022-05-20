@@ -26,7 +26,7 @@ const routes = (userInfo) => [
       { element: <Navigate to="/dashboard/app" replace /> },
       {
         path: 'app',
-        element: userInfo?.role === 'Manager' ? <DashboardApp /> : <AdminDashboardApp />
+        element: userInfo?.role === 'Manager' ? <DashboardApp /> : <Navigate to="/store/managers" />
       },
       { path: 'user', element: <User /> },
       { path: 'store/managers', element: <User /> },
