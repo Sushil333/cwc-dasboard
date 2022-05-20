@@ -46,7 +46,7 @@ class ComponentToPrint extends React.Component {
 
               <TableRow>
                 <TableCell variant="head">Price</TableCell>
-                <TableCell>{this.state.data.price}</TableCell>
+                <TableCell>{this.state.data.amount}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

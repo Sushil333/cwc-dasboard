@@ -95,7 +95,7 @@ export default function Orders() {
                       {row.username}
                     </TableCell>
                     <TableCell align="right">{row.dishName}</TableCell>
-                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="right">{row.amount}</TableCell>
                     <TableCell align="right">{row.address}</TableCell>
                     <TableCell align="right">{new Date(row.createdAt).toLocaleString()}</TableCell>
                     <TableCell align="right">
