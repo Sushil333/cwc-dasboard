@@ -63,12 +63,13 @@ export default function ShopProductCard({ product }) {
     setSnackbarConf((prevState) => ({ ...prevState, open: false }));
   };
 
-  const handleStatus = async () => {
+  const handleStatus = async (st) => {
     try {
-      const res = await api.disableDish({ dishId: _id, status: !dishStatus });
+      const res = await api.disableDish({ dishId: _id, status: !st });
       setDishStatus(res.data.data.status);
+      console.log(res.data.data);
       setSnackbarConf({
-        message: dishStatus ? 'Dish is enabled' : 'Dish is disabled',
+        message: dishStatus ? 'Dish is disabled' : 'Dish is enabled',
         severity: 'success',
         open: true
       });
@@ -126,7 +127,9 @@ export default function ShopProductCard({ product }) {
                 <Icon icon={trash2Fill} width={24} height={24} />
               </IconButton>
 
-              <Button onClick={handleStatus}>{dishStatus ? 'Enable' : 'Disable'}</Button>
+              <Button onClick={() => handleStatus(dishStatus)}>
+                {dishStatus ? 'Disable' : 'Enable'}
+              </Button>
             </div>
           </Stack>
         </Stack>
