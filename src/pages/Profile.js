@@ -124,7 +124,7 @@ export default function Profile() {
               <Typography variant="h5">Change Password</Typography>
               <TextField
                 id="outlined-basic"
-                label="Old Passowrd"
+                label="Old Password"
                 variant="outlined"
                 name="oldPassword"
                 value={formData.oldPassword}
@@ -133,7 +133,7 @@ export default function Profile() {
               />
               <TextField
                 id="outlined-basic"
-                label="New Passowrd"
+                label="New Password"
                 variant="outlined"
                 name="newPassword"
                 value={formData.newPassword}
@@ -143,7 +143,7 @@ export default function Profile() {
               />
               <TextField
                 id="outlined-basic"
-                label="Confirm New Passowrd"
+                label="Confirm New Password"
                 variant="outlined"
                 name="confirmNewPassword"
                 value={formData.confirmNewPassword}
