@@ -9,7 +9,7 @@ import {
   Card,
   Table,
   Stack,
-  Avatar,
+  // Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -190,7 +190,7 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, status, avatarUrl, active } = row;
+                      const { id, name, status, active } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -210,7 +210,7 @@ export default function User() {
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={avatarUrl} />
+                              {/* <Avatar alt={name} src={avatarUrl} /> */}
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
