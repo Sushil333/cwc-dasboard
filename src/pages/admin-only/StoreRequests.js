@@ -116,6 +116,16 @@ export default function BasicTable() {
     </Button>
   ];
 
+  const deleteStore = async (id) => {
+    try {
+      const res = await API.deleteStore(id);
+      console.log(res);
+      alert(res.data.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <Page title="User | Minimal-UI">
       <Snackbar
@@ -209,7 +219,7 @@ export default function BasicTable() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <IconButton color="error">
+                            <IconButton color="error" onClick={() => deleteStore(row.id)}>
                               <Icon icon={closeFill} />
                             </IconButton>
                           </TableCell>
@@ -218,7 +228,7 @@ export default function BasicTable() {
 
                       {filterTerm !== 'Pending' && (
                         <TableCell align="right">
-                          <IconButton color="error">
+                          <IconButton color="error" onClick={() => deleteStore(row.id)}>
                             <Icon icon={trashFill} />
                           </IconButton>
                         </TableCell>

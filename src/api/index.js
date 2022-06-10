@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
-// const API = axios.create({
-//   baseURL: 'https://507d-34-82-32-17.ngrok.io/'
-// });
+// const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
+const API = axios.create({
+  baseURL: 'https://dfc9-34-168-205-7.ngrok.io'
+});
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('userInfo')) {
@@ -31,6 +31,7 @@ export const getPlacedOrders = () => API.get('/api/store/store-orders-history');
 export const sendApprovedMail = (id) => API.get(`/api/store/send-approved-mail/${id}`);
 export const getDisplayData = (storeId) => API.get(`/api/store/get-store-order-details/${storeId}`);
 export const sendRejectionMail = (formData) => API.get('/api/store/send-rejection-mail', formData);
+export const deleteStore = (id) => API.get(`/api/store/delete/${id}`);
 
 /**
  * Dish Routes
