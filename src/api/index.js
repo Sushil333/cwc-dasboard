@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
-const API = axios.create({
-  baseURL: 'https://dfc9-34-168-205-7.ngrok.io'
-});
+const API = axios.create({ baseURL: 'https://cwc-api.herokuapp.com/' });
+// const API = axios.create({
+//   baseURL: 'https://dfc9-34-168-205-7.ngrok.io'
+// });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('userInfo')) {
